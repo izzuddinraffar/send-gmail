@@ -26,4 +26,5 @@ Step 5:
 pip install -r requirements.txt
 ```
 
-
+### More Information
+See [Visit flask installation](https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask).
