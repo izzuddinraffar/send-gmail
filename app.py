@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
 from flask_mail import Mail, Message
 import os
 
@@ -36,6 +37,6 @@ def hello():
                         recipients=[email_recipient],
                         body=message_recipient)
             mail.send(msg)
-            return 'Mail sent!'
+            return jsonify({'status':True, 'message': 'Email send successfully'})
         except Exception as e:
-            return(str(e))
+            return jsonify({'status':False, 'message': str(e)})
