@@ -1,10 +1,13 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask_cors import CORS, cross_origin
 from flask_mail import Mail, Message
 import os
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -24,7 +27,8 @@ if __name__ == '__main__':
 
 
 @app.route('/send-mail/', methods=['POST'])
-def hello():
+@cross_origin()
+def sendMail():
     name_recipient = request.args.get('name','')
     email_recipient = request.args.get('email','')
     subject_recipient = request.args.get('subject','')
