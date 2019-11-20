@@ -29,17 +29,17 @@ if __name__ == '__main__':
 @app.route('/send-mail/', methods=['POST'])
 @cross_origin()
 def sendMail():
-    name_recipient = request.args.get('name','')
-    email_recipient = request.args.get('email','')
-    subject_recipient = request.args.get('subject','')
-    message_recipient = request.args.get('message','')
+    name_sender = request.args.get('name','')
+    email_sender = request.args.get('email','')
+    subject_sender = request.args.get('subject','')
+    message_sender = request.args.get('message','')
     with app.app_context():
         try:
-            msg = Message(subject=name_recipient +' : '+ subject_recipient,
-                        sender=app.config.get("MAIL_USERNAME"),
+            msg = Message(subject=name_sender +' : '+ subject_sender,
+                        sender=[email_sender],
                         # replace with your email for testing
-                        recipients=[email_recipient],
-                        body=message_recipient)
+                        recipients=app.config.get("MAIL_USERNAME"),
+                        body=message_sender)
             mail.send(msg)
             return jsonify({'status':True, 'message': 'Email send successfully'})
         except Exception as e:
