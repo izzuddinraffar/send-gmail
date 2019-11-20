@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 from flask_mail import Mail, Message
 import os
 
@@ -21,15 +22,19 @@ if __name__ == '__main__':
     app.run()
 
 
-@app.route('/send-mail/')
+@app.route('/send-mail/', methods=['POST'])
 def hello():
+    name_recipient = request.args.get('name','')
+    email_recipient = request.args.get('email','')
+    subject_recipient = request.args.get('subject','')
+    message_recipient = request.args.get('message','')
     with app.app_context():
         try:
-            msg = Message(subject="Hello Jeppp",
+            msg = Message(subject=name_recipient +' : '+ subject_recipient,
                         sender=app.config.get("MAIL_USERNAME"),
                         # replace with your email for testing
-                        recipients=["izzuddinraffar905@gmail.com"],
-                        body="This is a test email I sent with Gmail and Python!")
+                        recipients=[email_recipient],
+                        body=message_recipient)
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
