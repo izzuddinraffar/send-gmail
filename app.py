@@ -35,11 +35,11 @@ def sendMail():
     message_sender = request.args.get('message','')
     with app.app_context():
         try:
-            msg = Message(subject=name_sender +' : '+ subject_sender,
+            msg = Message(subject=email_sender +' : '+ subject_sender,
                         sender=email_sender,
                         # replace with your email for testing
                         recipients=[app.config.get("MAIL_USERNAME")],
-                        body=message_sender)
+                        body=name_sender +' : '+ message_sender)
             mail.send(msg)
             return jsonify({'status':True, 'message': 'Email send successfully'})
         except Exception as e:
